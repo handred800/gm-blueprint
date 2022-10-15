@@ -1,0 +1,12 @@
+{
+    "items": [
+        {
+            "name": "黃金",
+            "status": "gold"
+        },
+        {
+            "name": "燃料",
+            "status": "fuel"
+        }
+    ]
+}

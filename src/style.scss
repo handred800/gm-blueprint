@@ -1,0 +1,12 @@
+td {
+    &[data-item] {
+        word-break: keep-all;
+    }
+    &[data-item="gold"] {
+        background-color: #FFEF82;
+    }
+    &[data-item="fuel"] {
+        color: #fff;
+        background-color: #B33030;
+    }
+}
