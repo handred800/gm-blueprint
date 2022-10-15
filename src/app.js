@@ -19,7 +19,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
 })
 
 document.querySelector('#show').addEventListener('change', () => {
-  $app.classList.toggle('show');
+  document.querySelector('#app').classList.toggle('show');
 })
 
 init(10, 25)
