@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { randomPointFromXY, getMapDataXY, randomItem, randomRange } from './tool';
+import { randomPointFromXY, getMapDataXY, randomItem, randomRange, weightedRandom } from './tool';
 
 // mapData generator
 export function generateTreasureMap(x, y, treasureCount) {
@@ -9,29 +9,43 @@ export function generateTreasureMap(x, y, treasureCount) {
     _.ceil((x * y) / 10)
   )
 
+  // 基本地塊
   for (let i = 0; i < y; i++) {
     let row = Array.from({ length: x }, () => 0);
     map[i] = row;
   }
 
-  function setTreasurePoint(map, point) {
-    const randomPoint = randomPointFromXY(x, y);
-    for (let j = 1; j <= point; j++) {
-      const [coodrX, coodrY] = randomPoint();
-      map[coodrY][coodrX] = randomItem();
-    }
-  }
-  setTreasurePoint(map, itemCount);
+  // 設置隨機 item
+  const itemList = [];
 
-  return map;
+  const getRandomItem = weightedRandom();
+  const getRandomPoint = randomPointFromXY(x, y);
+
+  for (let pointCount = 0; pointCount < itemCount; pointCount++) {
+    const [coodrX, coodrY] = getRandomPoint();
+    itemList[pointCount] = getRandomItem();
+    map[coodrY][coodrX] = itemList[pointCount];
+  }
+
+  const itemInfo = _.reduce(itemList, (result, item) => {
+    if(result[item.name]) {
+      result[item.name] += 1;
+    } else {
+      result[item.name] = 1;
+    }
+    return result
+  }, {})
+
+  return { map, itemInfo };
 }
 
 // table render
-export function drawTable($el, mapData) {
-  const $app = document.querySelector('#app');
+export function drawTable($container, mapData) {
   const [x, y] = getMapDataXY(mapData);
   const $table = document.createElement('table');
   const $tbody = document.createElement('tbody');
+
+  $container.innerHTML = '';
 
   function tdContent(x, y) {
     const cellX = x - 1;
@@ -39,7 +53,7 @@ export function drawTable($el, mapData) {
     const item = mapData[cellX][cellY];
 
     if (item !== 0) {
-      return `<td data-item="${item.status}">${item.name}</td>`
+      return `<td data-item="${item.label}" data-name="${item.name}">${y},${x}</td>`
     } else {
       return `<td>${y},${x}</td>`
     }
@@ -61,7 +75,7 @@ export function drawTable($el, mapData) {
   }
 
   $table.append($tbody);
-  $app.append($table);
+  $container.append($table);
   $table.classList = 'table table-bordered'
 
 }

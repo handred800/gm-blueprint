@@ -10,6 +10,14 @@
 </head>
 <body>
     <div class="container-lg">
+        <form>
+            <div class="input-group mb-3">
+                <input id="col" type="number" min="3" value="10" class="form-control" required>
+                <input id="row" type="number" min="3" value="25" class="form-control" required>
+                <button class="btn btn-primary">產生</button>
+            </div>
+        </form>
+        <input type="checkbox" id="show">
         <div id="app" class="table-responsive"></div>
     </div>
     <script type="module" src="app.js"></script>

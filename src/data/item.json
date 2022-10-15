@@ -2,11 +2,18 @@
     "items": [
         {
             "name": "黃金",
-            "status": "gold"
+            "label": "gold",
+            "weight": 5
         },
         {
             "name": "燃料",
-            "status": "fuel"
+            "label": "fuel",
+            "weight": 10
+        },
+        {
+            "name": "遺物",
+            "label": "legacy",
+            "weight": 1
         }
     ]
 }

@@ -1,12 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500&display=swap');
+html, body {
+    font-family: 'Noto Serif TC', serif;
+}
+
 td {
+    text-align: center;
+
     &[data-item] {
+        color: #292929;
         word-break: keep-all;
+        &:hover {
+            font-size: 0;
+            &::before {
+                content: attr(data-name);
+                font-weight: bold;
+                font-size: 1rem;
+            }
+        }
     }
     &[data-item="gold"] {
-        background-color: #FFEF82;
+        background-color: #FBDF07;
     }
     &[data-item="fuel"] {
+        background-color: #FF7F3F;
+    }
+    &[data-item="legacy"] {
+        background-color: #B8E8FC;
+    }
+}
+
+.show {
+    td {
         color: #fff;
-        background-color: #B33030;
+        &:hover {
+            color: #292929;
+        }
+
+        &[data-item] {
+            color: #292929;
+            word-break: keep-all;
+            font-weight: bold;
+            font-size: 0;
+            &::before {
+                content: attr(data-name);
+                font-size: 1rem;
+            }
+        }
     }
 }
