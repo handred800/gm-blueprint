@@ -2,6 +2,26 @@ import _ from 'lodash';
 import { randomPointFromXY, getMapDataXY, randomRange } from './tool';
 import { randomItem } from './item'
 
+function randomUniqPoint(x, y, itemCount) {
+  let coordinateList = [];
+  const getRandomPoint = randomPointFromXY(x, y);
+
+  function createUniqCoordinate(totalCount) {
+    for (let pointCount = 0; pointCount < totalCount; pointCount++) {
+       coordinateList.push(getRandomPoint());
+    }
+    coordinateList = _.uniqWith(coordinateList, _.isEqual);
+    console.count('createUniqCoordinate')
+    console.log(`${coordinateList.length}, ${itemCount}`)
+  }
+
+  while (coordinateList.length < itemCount) {
+    createUniqCoordinate(itemCount - coordinateList.length)
+  }
+
+  return coordinateList
+}
+
 // mapData generator
 export function generateTreasureMap(x, y, treasureCount) {
   const map = [];
@@ -18,10 +38,10 @@ export function generateTreasureMap(x, y, treasureCount) {
 
   // 設置隨機 item
   const itemList = randomItem(itemCount);
-  const getRandomPoint = randomPointFromXY(x, y);
+  const randomPointList = randomUniqPoint(x, y, itemCount);
 
   for (let pointCount = 0; pointCount < itemCount; pointCount++) {
-    const [coodrX, coodrY] = getRandomPoint();
+    const [coodrX, coodrY] = randomPointList[pointCount];
     map[coodrY][coodrX] = itemList[pointCount];
   }
 

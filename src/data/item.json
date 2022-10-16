@@ -3,13 +3,13 @@
         {
             "name": "黃金",
             "label": "gold",
-            "weight": 5,
+            "weight": 10,
             "qty": [10, 100]
         },
         {
             "name": "燃料",
             "label": "fuel",
-            "weight": 10,
+            "weight": 20,
             "qty": [100, 500]
         },
         {
