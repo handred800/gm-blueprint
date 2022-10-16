@@ -24,7 +24,7 @@ td {
     &[data-item="fuel"] {
         background-color: #FF7F3F;
     }
-    &[data-item="legacy"] {
+    &[data-item="relic"] {
         background-color: #B8E8FC;
     }
 }
@@ -42,7 +42,7 @@ td {
             font-weight: bold;
             font-size: 0;
             &::before {
-                content: attr(data-name);
+                content: attr(data-qty);
                 font-size: 1rem;
             }
         }

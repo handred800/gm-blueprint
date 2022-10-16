@@ -3,17 +3,20 @@
         {
             "name": "黃金",
             "label": "gold",
-            "weight": 5
+            "weight": 5,
+            "qty": [10, 100]
         },
         {
             "name": "燃料",
             "label": "fuel",
-            "weight": 10
+            "weight": 10,
+            "qty": [100, 500]
         },
         {
             "name": "遺物",
-            "label": "legacy",
-            "weight": 1
+            "label": "relic",
+            "weight": 1,
+            "qty": [1, 1]
         }
     ]
 }

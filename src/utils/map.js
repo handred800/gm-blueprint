@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import { randomPointFromXY, getMapDataXY, randomItem, randomRange, weightedRandom } from './tool';
+import { randomPointFromXY, getMapDataXY, randomRange } from './tool';
+import { randomItem } from './item'
 
 // mapData generator
 export function generateTreasureMap(x, y, treasureCount) {
@@ -16,22 +17,20 @@ export function generateTreasureMap(x, y, treasureCount) {
   }
 
   // 設置隨機 item
-  const itemList = [];
-
-  const getRandomItem = weightedRandom();
+  const itemList = randomItem(itemCount);
   const getRandomPoint = randomPointFromXY(x, y);
 
   for (let pointCount = 0; pointCount < itemCount; pointCount++) {
     const [coodrX, coodrY] = getRandomPoint();
-    itemList[pointCount] = getRandomItem();
     map[coodrY][coodrX] = itemList[pointCount];
   }
 
   const itemInfo = _.reduce(itemList, (result, item) => {
-    if(result[item.name]) {
-      result[item.name] += 1;
+    const name = item.data.name;
+    if(result[name]) {
+      result[name] += 1;
     } else {
-      result[item.name] = 1;
+      result[name] = 1;
     }
     return result
   }, {})
@@ -53,7 +52,8 @@ export function drawTable($container, mapData) {
     const item = mapData[cellX][cellY];
 
     if (item !== 0) {
-      return `<td data-item="${item.label}" data-name="${item.name}">${y},${x}</td>`
+      const {data, qty} = item
+      return `<td data-item="${data.label}" data-name="${data.name}" data-qty="${qty}">${y},${x}</td>`
     } else {
       return `<td>${y},${x}</td>`
     }
