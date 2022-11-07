@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Table from './component/Table';
 import useInput from "./hooks/useInput";
 import { generateTreasureMap } from "./utils/map";
