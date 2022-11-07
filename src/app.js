@@ -1,25 +1,36 @@
-import { generateTreasureMap, drawTable } from "./utils/map";
+import React, { useState, useEffect } from "react";
+import Table from './component/Table';
+import useInput from "./hooks/useInput";
+import { generateTreasureMap } from "./utils/map";
 
-function init (row, col, itemCount) {
-  const $app = document.querySelector('#app');
-  const { map, itemInfo } = generateTreasureMap(row, col, itemCount);
-  
-  console.table(map);
-  console.table(itemInfo)
-  drawTable($app, map)
+export default function App() {
+  const [mapData, setMapData] = useState([]);
+  const rowInput = useInput(10);
+  const colInput = useInput(25);
+
+  function createMap(e) {
+    e?.preventDefault()
+    const { map, itemInfo } = generateTreasureMap(rowInput.value, colInput.value);
+    console.table(map)
+    console.table(itemInfo)
+
+    setMapData(map);
+  }
+
+  useEffect(() => createMap(), [])
+
+  return (
+    <>
+      <form onSubmit={createMap}>
+        <div className="input-group mb-3">
+          <input id="col" type="number" min="3" {...rowInput} className="form-control" required />
+          <input id="row" type="number" min="3" {...colInput} className="form-control" required />
+          <button className="btn btn-primary">產生</button>
+        </div>
+      </form>
+      <div className="table-responsive">
+        <Table tableData={mapData} />
+      </div>
+    </>
+  )
 }
-
-// form
-document.querySelector('form').addEventListener('submit', (e) => {
-  e.preventDefault()
-  const row = parseInt(document.querySelector('#col').value);
-  const col = parseInt(document.querySelector('#row').value);
-
-  init(row, col);
-})
-
-document.querySelector('#show').addEventListener('change', () => {
-  document.querySelector('#app').classList.toggle('show');
-})
-
-init(10, 25)

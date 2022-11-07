@@ -9,6 +9,7 @@ export function randomPointFromXY(MaxX, MaxY) {
 }
 
 export function getMapDataXY(mapData) {
+  if(mapData.length === 0) return [0, 0]
   const x = mapData[0].length;
   const y = mapData.length;
   return [x, y]
